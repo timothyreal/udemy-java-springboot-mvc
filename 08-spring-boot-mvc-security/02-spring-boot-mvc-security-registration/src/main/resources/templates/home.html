@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html
+    lang="en"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Employees Page</title>
+
+</head>
+<body>
+    <h2>Employees Page</h2>
+    <hr>
+    
+    <p>
+        Welcome to Employees page!
+    </p>
+
+    <hr>
+
+    <p>
+        User: <span sec:authentication="principal.username"></span>
+        <br><br>
+        Role(s): <span sec:authentication="principal.authorities"></span>
+    </p>
+
+    <div sec:authorize="hasRole('MANAGER')">
+        <p>
+            <a th:href="@{/managers}">Managers Page</a>
+        </p>
+    </div>
+
+    <div sec:authorize="hasRole('ADMIN')">
+        <p>
+            <a th:href="@{/systems}">Systems Page</a>
+        </p>
+    </div>
+
+    <hr>
+
+    <form action="#" th:action="@{/logout}" method="POST">
+        <input type="submit" value="Logut">
+    </form>
+
+
+</body>
+</html>

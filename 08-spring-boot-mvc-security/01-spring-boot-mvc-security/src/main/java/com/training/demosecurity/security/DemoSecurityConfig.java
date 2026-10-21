@@ -9,21 +9,7 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
-enum UserRole {
-    EMPLOYEE("EMPLOYEE"),
-    MANAGER("MANAGER"),
-    ADMIN("ADMIN");
-
-    private String role;
-
-    private UserRole(String role) {
-        this.role = role;
-    }
-
-    public String getRole() {
-        return this.role;
-    }
-}
+import com.training.demosecurity.constant.UserRole;
 
 @Configuration
 public class DemoSecurityConfig {
@@ -48,9 +34,9 @@ public class DemoSecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(
                 configurer -> configurer
-                        .requestMatchers("/").hasRole(UserRole.EMPLOYEE.getRole())
-                        .requestMatchers("/managers/**").hasRole(UserRole.MANAGER.getRole())
-                        .requestMatchers("/systems/**").hasRole(UserRole.ADMIN.getRole())
+                        .requestMatchers("/").hasRole(UserRole.EMPLOYEE.getAuthority())
+                        .requestMatchers("/managers/**").hasRole(UserRole.MANAGER.getAuthority())
+                        .requestMatchers("/systems/**").hasRole(UserRole.ADMIN.getAuthority())
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/showLoginPage")
